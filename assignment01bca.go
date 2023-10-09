@@ -14,12 +14,12 @@ type Block struct {
 	CurrentHash  string
 }
 
-// Blockchain represents the entire blockchain.
+// the entire blockchain.
 type Blockchain struct {
 	Blocks []*Block
 }
 
-// NewBlock creates a new block and adds it to the blockchain.
+// New block is created and added to blockchain.
 func (bc *Blockchain) NewBlock(transaction string, nonce int, previousHash string) {
 	newBlock := &Block{
 		Transaction:  transaction,
@@ -30,22 +30,22 @@ func (bc *Blockchain) NewBlock(transaction string, nonce int, previousHash strin
 	bc.Blocks = append(bc.Blocks, newBlock)
 }
 
-// CreateHash generates the hash for a given block.
+// Hash created for given block.
 func (bc *Blockchain) CreateHash(block *Block) string {
-	data := fmt.Sprintf("%s%d%s", block.Transaction, block.Nonce, block.PreviousHash)
-	hash := sha256.Sum256([]byte(data))
-	return fmt.Sprintf("%x", hash)
+	value := fmt.Sprintf("%s%d%s", block.Transaction, block.Nonce, block.PreviousHash)
+	hash_value := sha256.Sum256([]byte(value))
+	return fmt.Sprintf("%x", hash_value)
 }
 
-// DisplayBlocks prints all the blocks in the blockchain.
+// prints all the blocks in the blockchain.
 func (bc *Blockchain) DisplayBlocks() {
 	for _, block := range bc.Blocks {
-		fmt.Printf("Transaction: %s\nNonce: %d\nPrevious Hash: %s\nCurrent Hash: %s\n\n",
+		fmt.Printf("Transaction: %s\n Nonce: %d\n Previous Hash: %s\n Current Hash: %s\n\n",
 			block.Transaction, block.Nonce, block.PreviousHash, block.CurrentHash)
 	}
 }
 
-// ChangeBlock changes the transaction of a given block.
+// the transaction of a given block is changed.
 func (bc *Blockchain) ChangeBlock(blockIndex int, newTransaction string) {
 	if blockIndex >= 0 && blockIndex < len(bc.Blocks) {
 		bc.Blocks[blockIndex].Transaction = newTransaction
@@ -53,10 +53,10 @@ func (bc *Blockchain) ChangeBlock(blockIndex int, newTransaction string) {
 	}
 }
 
-// VerifyChain verifies the integrity of the blockchain.
+// verifies the integrity of the blockchain.
 func (bc *Blockchain) VerifyChain() bool {
-	for i := 1; i < len(bc.Blocks); i++ {
-		if bc.Blocks[i].PreviousHash != bc.Blocks[i-1].CurrentHash {
+	for j := 1; j < len(bc.Blocks); j++ {
+		if bc.Blocks[j].PreviousHash != bc.Blocks[j-1].CurrentHash {
 			return false
 		}
 	}
